@@ -1,150 +1,237 @@
-# Modern Portfolio Website
+# Dynamic Portfolio Website
 
-A clean, responsive portfolio website built with HTML, CSS, and JavaScript. Features include smooth animations, dark mode toggle, mobile-friendly design, and modern UI/UX.
+A modern, dynamic portfolio website built with Node.js, Express, and PostgreSQL. Features a clean, responsive design with an admin panel for easy content management.
 
-## Features
+## 🚀 Features
 
-- ✨ **Modern Design**: Clean, minimal design with excellent typography
-- 📱 **Responsive**: Fully responsive design that works on all devices
-- 🌙 **Dark Mode**: Toggle between light and dark themes
-- 🎨 **Smooth Animations**: CSS animations and transitions throughout
-- 📜 **Smooth Scrolling**: Smooth navigation between sections
-- 📝 **Contact Form**: Functional contact form with validation
-- 🎯 **SEO Friendly**: Semantic HTML structure
-- ⚡ **Fast Loading**: Optimized for performance
+- **Dynamic Content**: All content is loaded from a PostgreSQL database
+- **Admin Panel**: Secure admin interface for managing portfolio content
+- **Responsive Design**: Modern, mobile-friendly UI
+- **Real-time Updates**: Changes reflect immediately without rebuilding
+- **Contact Form**: Functional contact form with database storage
+- **JWT Authentication**: Secure admin authentication
+- **Clean Architecture**: Well-organized, maintainable codebase
 
-## Sections
+## 📁 Project Structure
 
-1. **Home**: Hero section with welcome message and profile image
-2. **About**: Bio, skills, and technologies
-3. **Projects**: Portfolio projects with images and links
-4. **Contact**: Contact form and social links
+```
+Portfolio/
+├── src/                          # Source code
+│   ├── config/                   # Configuration files
+│   │   └── database.js          # Database connection
+│   ├── controllers/             # Route controllers
+│   │   ├── adminController.js   # Admin operations
+│   │   ├── contactController.js # Contact form handling
+│   │   ├── profileController.js # Profile management
+│   │   ├── projectController.js # Project CRUD operations
+│   │   └── skillController.js   # Skills management
+│   ├── database/                # Database setup
+│   │   ├── db.js               # Database connection (legacy)
+│   │   └── init.js             # Database initialization
+│   ├── middleware/              # Express middleware
+│   │   └── auth.js             # JWT authentication
+│   ├── routes/                  # API routes
+│   │   ├── admin.js            # Admin routes
+│   │   ├── contact.js          # Contact routes
+│   │   ├── profile.js          # Profile routes
+│   │   ├── projects.js         # Project routes
+│   │   └── skills.js           # Skill routes
+│   └── utils/                   # Utility functions
+│       └── validation.js       # Input validation
+├── public/                      # Static files
+│   ├── assets/                  # Assets directory
+│   │   ├── css/                # Stylesheets
+│   │   │   └── styles.css      # Main stylesheet
+│   │   ├── js/                 # JavaScript files
+│   │   │   └── script.js       # Frontend logic
+│   │   └── images/             # Image assets
+│   └── index.html              # Main HTML file
+├── config.env                   # Environment variables
+├── package.json                 # Dependencies and scripts
+├── server.js                    # Main server file
+├── setup.js                     # Setup script
+└── README.md                    # This file
+```
 
-## Getting Started
+## 🛠️ Installation
 
 ### Prerequisites
 
-- A modern web browser
-- Basic knowledge of HTML, CSS, and JavaScript (for customization)
+- Node.js (v14 or higher)
+- PostgreSQL (v12 or higher)
+- npm or yarn
 
-### Installation
+### Setup Instructions
 
-1. Clone or download this repository
-2. Open `index.html` in your web browser
-3. That's it! The website is ready to use
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Portfolio
+   ```
 
-### Local Development
+2. **Create environment file**
+   Create a `config.env` file in the root directory:
+   ```env
+   DB_USER=postgres
+   DB_PASSWORD=0000
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=portfolio_db
+   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+   PORT=3000
+   ```
 
-If you want to make changes:
+3. **Run the setup script**
+   ```bash
+   npm run setup
+   ```
+   This will:
+   - Install dependencies
+   - Initialize the database
+   - Set up default content
 
-1. Open the project in your favorite code editor
-2. Make your changes to the HTML, CSS, or JavaScript files
-3. Refresh your browser to see the changes
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-## Customization
+5. **Access your portfolio**
+   - Portfolio: http://localhost:3000
+   - Admin Panel: Click the gear icon (⚙️) in the bottom-right corner
 
-### Personal Information
+## 🔧 Configuration
 
-Edit the following in `index.html`:
+### Database Setup
 
-- **Name**: Replace "John Doe" with your name
-- **Title**: Update the job title in the hero section
-- **Bio**: Modify the about section text
-- **Contact Info**: Update email, phone, and location
-- **Social Links**: Add your social media profiles
+The setup script will automatically:
+- Create the database if it doesn't exist
+- Create all necessary tables
+- Insert default content for Vatsal Garg
 
-### Profile Images
+### Default Admin Credentials
 
-Replace the placeholder images with your own:
+- **Username**: admin
+- **Password**: admin123
 
-1. **Hero Image**: Update the `src` attribute in the hero section
-2. **About Image**: Update the `src` attribute in the about section
-3. **Project Images**: Replace project images with your own screenshots
+⚠️ **Important**: Change these credentials after first login for security!
 
-### Projects
+### Customizing Content
 
-To add or modify projects:
+1. **Profile Information**: Update in `src/database/init.js`
+2. **Projects**: Add/remove projects in the admin panel
+3. **Skills**: Manage skills through the admin panel
+4. **Styling**: Modify `public/assets/css/styles.css`
 
-1. Copy the project card structure in the projects section
-2. Update the image, title, description, and technologies
-3. Add your live demo and GitHub links
+## 📚 API Endpoints
 
-### Skills
+### Public Endpoints
 
-Modify the skills section in the about area:
+- `GET /api/profile` - Get profile information
+- `GET /api/projects` - Get all projects
+- `GET /api/projects/:id` - Get specific project
+- `GET /api/skills` - Get all skills
+- `GET /api/skills/category/:category` - Get skills by category
+- `POST /api/contact` - Submit contact message
 
-1. Update skill categories (Frontend, Backend, Tools)
-2. Add or remove skill tags as needed
-3. Customize the styling in `styles.css`
+### Protected Endpoints (Admin Only)
 
-### Colors and Styling
+- `POST /api/admin/login` - Admin login
+- `GET /api/admin/dashboard` - Get dashboard stats
+- `GET /api/admin/messages/recent` - Get recent messages
+- `PUT /api/admin/change-password` - Change admin password
+- `PUT /api/profile` - Update profile
+- `POST /api/projects` - Create project
+- `PUT /api/projects/:id` - Update project
+- `DELETE /api/projects/:id` - Delete project
+- `POST /api/skills` - Add skill
+- `PUT /api/skills/:id` - Update skill
+- `DELETE /api/skills/:id` - Delete skill
+- `GET /api/contact` - Get all messages
+- `DELETE /api/contact/:id` - Delete message
 
-The website uses CSS custom properties for easy theming:
+## 🎨 Customization
 
-```css
-:root {
-    --primary-color: #6366f1;    /* Main brand color */
-    --secondary-color: #64748b;  /* Secondary text */
-    --accent-color: #f59e0b;     /* Accent color */
-    /* ... more variables */
-}
-```
+### Adding New Features
 
-### Dark Mode
+1. **New API Endpoint**:
+   - Create controller in `src/controllers/`
+   - Create route in `src/routes/`
+   - Add to `server.js`
 
-The dark mode automatically saves user preference and includes:
+2. **New Frontend Feature**:
+   - Add HTML in `public/index.html`
+   - Add styles in `public/assets/css/styles.css`
+   - Add logic in `public/assets/js/script.js`
 
-- Dark backgrounds and light text
-- Adjusted shadows and borders
-- Proper contrast ratios
+3. **Database Changes**:
+   - Update schema in `src/database/init.js`
+   - Add migration scripts if needed
 
-## File Structure
+### Styling
 
-```
-portfolio/
-├── index.html          # Main HTML file
-├── styles.css          # All CSS styles
-├── script.js           # JavaScript functionality
-└── README.md           # This file
-```
+The project uses a modern CSS architecture with:
+- CSS Custom Properties for theming
+- Flexbox and Grid for layouts
+- Mobile-first responsive design
+- Smooth animations and transitions
 
-## Browser Support
+## 🔒 Security
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- JWT-based authentication for admin access
+- Password hashing with bcrypt
+- Input validation and sanitization
+- CORS configuration
+- Environment variable protection
 
-## Performance
+## 🚀 Deployment
 
-The website is optimized for performance:
+### Production Setup
 
-- Minimal external dependencies
-- Optimized images (use WebP format when possible)
-- Efficient CSS and JavaScript
-- Fast loading times
+1. **Environment Variables**:
+   - Use strong JWT secret
+   - Configure production database
+   - Set appropriate CORS origins
 
-## Deployment
+2. **Database**:
+   - Use production PostgreSQL instance
+   - Set up proper backups
+   - Configure connection pooling
 
-You can deploy this website to any static hosting service:
+3. **Server**:
+   - Use PM2 or similar process manager
+   - Set up reverse proxy (nginx)
+   - Configure SSL certificates
 
-- **GitHub Pages**: Push to a GitHub repository and enable Pages
-- **Netlify**: Drag and drop the folder to Netlify
-- **Vercel**: Connect your GitHub repository
-- **Firebase Hosting**: Use Firebase CLI to deploy
+### Deployment Options
 
-## Contributing
+- **Heroku**: Easy deployment with PostgreSQL addon
+- **DigitalOcean**: App Platform or Droplet
+- **AWS**: EC2 with RDS
+- **Vercel**: Frontend deployment with API routes
 
-Feel free to fork this project and customize it for your needs. If you make improvements, consider sharing them!
+## 🤝 Contributing
 
-## License
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-This project is open source and available under the [MIT License](LICENSE).
+## 📄 License
 
-## Support
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-If you have any questions or need help customizing the portfolio, feel free to open an issue or reach out!
+## 👨‍💻 Author
 
----
+**Vatsal Garg**
+- BCA in AI/ML at UPES Dehradun
+- Location: Lucknow, Uttar Pradesh
+- GitHub: [Your GitHub]
+- LinkedIn: [Your LinkedIn]
 
-**Happy coding! 🚀** 
+## 🙏 Acknowledgments
+
+- Font Awesome for icons
+- Google Fonts for typography
+- PostgreSQL community
+- Express.js team 
