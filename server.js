@@ -35,11 +35,6 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Serve the contact form test page
-app.get('/test-contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'test-contact.html'));
-});
-
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -55,5 +50,4 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Visit http://localhost:${PORT} to view your portfolio`);
     console.log(`Admin panel: http://localhost:${PORT}/admin`);
-    console.log(`Contact test: http://localhost:${PORT}/test-contact`);
 }); 
